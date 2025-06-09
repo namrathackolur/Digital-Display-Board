@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Announcements with Backgrounds</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: #000;
+      color: white;
+    }
+    .slide {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 30px;
+      width: 80%;
+      max-width: 700px;
+      height: 80vh;
+      border-radius: 15px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.5);
+      color: white;
+      user-select: none;
+    }
+    .slide.active {
+      display: block;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 1.3em;
+      margin-bottom: 1em;
+    }
+    .footer {
+      position: absolute;
+      bottom: 15px; width: 100%;
+      text-align: center; font-size: 1em;
+      color: #ddd;
+      user-select: none;
+    }
+    .info-bar {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2em;
+      color: #eee;
+      user-select: none;
+    }
+    #clock, #weather, #waterSupply {
+      display: inline-block;
+      margin: 0 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Info bar -->
+  <div class="info-bar">
+    <span id="clock">Loading time...</span> | 
+    <span id="weather">Weather: 30°C, Sunny</span> | 
+    <span id="waterSupply">Water Supply: 6 AM - 9 AM & 6 PM - 9 PM</span>
+  </div>
+
+  <!-- Slides -->
+  <div class="slide active" style="background-image: url('ration.jpg');">
+    <h1>Free Ration Scheme</h1>
+    <p>Rice and wheat are distributed free of cost to all BPL card holders till June 30, 2025.</p>
+  </div>
+
+  <div class="slide" style="background-image: url('health.jpg');">
+    <h1>Health Camp</h1>
+    <p>Free checkups and medicine at the Ward #2 center on Sunday, 9 AM - 2 PM.</p>
+  </div>
+
+  <div class="slide" style="background-image: url('job.jpg');">
+    <h1>Job Mela</h1>
+    <p>Skill development and employment registration open until June 15 at local office.</p>
+  </div>
+
+  <div class="slide" style="background-image: url('midday_meal.jpg');">
+    <h1>Mid Day Meal Program</h1>
+    <p>Providing nutritious meals to children in government schools to improve health and attendance.</p>
+  </div>
+
+  <div class="slide" style="background-image: url('gandhi_jayanti.jpg');">
+    <h1>Gandhi Jayanti</h1>
+    <p>Celebrating Mahatma Gandhi’s role in India’s independence on October 2nd.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">Powered by Digital India</div>
+
+  <!-- Audio elements -->
+  <audio id="hindiAudio" src="audio/water-hindi.mp3"></audio>
+  <audio id="marathiAudio" src="audio/water-marathi.mp3"></audio>
+
+<script>
+  // Slide show
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  function showNextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }
+  setInterval(showNextSlide, 6000);
+
+  // Clock
+  function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    document.getElementById('clock').textContent = "Time: " + timeString;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Voice announcements every 30 minutes
+  let lastPlayed = null;
+  function voiceAnnouncement() {
+    const now = new Date();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    if ((minutes === 0 || minutes === 30) && seconds < 10) {
+      const key = now.getHours() + ":" + minutes;
+      if (key !== lastPlayed) {
+        lastPlayed = key;
+        document.getElementById("hindiAudio").play();
+        setTimeout(() => {
+          document.getElementById("marathiAudio").play();
+        }, 8000); // Delay Marathi audio by 8 seconds
+      }
+    }
+  }
+  setInterval(voiceAnnouncement, 10000); // check every 10 seconds
+</script>
+
+</body>
+</html>
