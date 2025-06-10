@@ -26,5 +26,5 @@ It shows important government schemes, local programs, and alerts — all in a w
 It’s simple, visual, and made to bridge the communication gap for people who don’t have access to phones or apps.
 
 
-🔗 Live Demo Website:https://05221773-d933-4af7-aaee-2689b8d452e5-00-36t4htoxx6w51.sisko.replit.dev/
+🔗 Live Demo Website : https://codepen.io/Namratha-C-Kolur/pen/QwbQLYB
 
